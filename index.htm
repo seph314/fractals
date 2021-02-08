@@ -6,17 +6,18 @@
         function init() {
             var ctx = document.getElementById('canvas').getContext("2d");
             ctx.fillStyle = "red"
-            let firstPoint = drawPoint(ctx);
-            let secondPoint = drawPoint(ctx);
-            let thirdPoint = drawPoint(ctx);
 
-            let startingPoints = [firstPoint, secondPoint, thirdPoint];
+            let dynamicStartingPoints = [];
+            for(i=0; i<3; i++) {
+                dynamicStartingPoints.push(drawPoint(ctx));
+            }
+
             ctx.fillStyle = "green"
             let currentPoint = startPoint(ctx);
 
             for (i = 0; i < 20000; i++) {
                 setTimeout(() => {
-                    let targetPoint = startingPoints[Math.floor(Math.random() * startingPoints.length)];
+                    let targetPoint = dynamicStartingPoints[Math.floor(Math.random() * dynamicStartingPoints.length)];
                     let newPoint = [(currentPoint[0] + targetPoint[0]) / 2, (currentPoint[1] + targetPoint[1]) / 2];
                     ctx.fillStyle = "blue";
                     ctx.beginPath();
