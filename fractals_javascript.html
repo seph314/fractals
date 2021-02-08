@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript">
+        function init() {
+            var ctx = document.getElementById('canvas').getContext("2d");
+            ctx.fillStyle = "red"
+            let firstPoint = drawPoint(ctx);
+            let secondPoint = drawPoint(ctx);
+            let thirdPoint = drawPoint(ctx);
+
+            let startingPoints = [firstPoint, secondPoint, thirdPoint];
+            ctx.fillStyle = "green"
+            let currentPoint = startPoint(ctx);
+
+            for (i = 0; i < 20000; i++) {
+                setTimeout(() => {
+                    let targetPoint = startingPoints[Math.floor(Math.random() * startingPoints.length)];
+                    let newPoint = [(currentPoint[0] + targetPoint[0]) / 2, (currentPoint[1] + targetPoint[1]) / 2];
+                    ctx.fillStyle = "blue";
+                    ctx.beginPath();
+                    ctx.arc(newPoint[0], newPoint[1], 1, 0, 2 * Math.PI, true);
+                    ctx.fill();
+                    currentPoint = newPoint;
+                }, 200)
+            }
+        }
+
+        function drawPoint(ctx) {
+            let coordinates = [randomBetween(100, 1000), randomBetween(100, 1000)];
+            ctx.beginPath();
+            ctx.arc(coordinates[0], coordinates[1], 5, 0, 2 * Math.PI, true);
+            ctx.fill();
+            return coordinates;
+        }
+
+        function startPoint(ctx) {
+            let coordinates = [randomBetween(100, 1000), randomBetween(100, 1000)];
+            ctx.beginPath();
+            ctx.arc(coordinates[0], coordinates[1], 2, 0, 2 * Math.PI, true);
+            ctx.fill();
+            return coordinates;
+        }
+
+        function randomBetween(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <canvas id="canvas" width="1200" height="1200"></canvas>
+</body>
+
+</html>
