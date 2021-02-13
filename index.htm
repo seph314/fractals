@@ -5,17 +5,15 @@
     <script type="text/javascript">
         function init() {
             var ctx = document.getElementById('canvas').getContext("2d");
-            ctx.fillStyle = "red"
 
             let dynamicStartingPoints = [];
             for(i=0; i<3; i++) {
-                dynamicStartingPoints.push(drawPoint(ctx));
+                dynamicStartingPoints.push(drawPoint(ctx, 5, "red"));
             }
 
-            ctx.fillStyle = "green"
-            let currentPoint = startPoint(ctx);
+            let currentPoint = drawPoint(ctx, 3, "green");
 
-            for (i = 0; i < 20000; i++) {
+            for (i = 0; i < 200000; i++) {
                 setTimeout(() => {
                     let targetPoint = dynamicStartingPoints[Math.floor(Math.random() * dynamicStartingPoints.length)];
                     let newPoint = [(currentPoint[0] + targetPoint[0]) / 2, (currentPoint[1] + targetPoint[1]) / 2];
@@ -28,18 +26,11 @@
             }
         }
 
-        function drawPoint(ctx) {
+        function drawPoint(ctx, size, color) {
             let coordinates = [randomBetween(100, 1000), randomBetween(100, 1000)];
+            ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.arc(coordinates[0], coordinates[1], 5, 0, 2 * Math.PI, true);
-            ctx.fill();
-            return coordinates;
-        }
-
-        function startPoint(ctx) {
-            let coordinates = [randomBetween(100, 1000), randomBetween(100, 1000)];
-            ctx.beginPath();
-            ctx.arc(coordinates[0], coordinates[1], 2, 0, 2 * Math.PI, true);
+            ctx.arc(coordinates[0], coordinates[1], size, 0, 2 * Math.PI, true);
             ctx.fill();
             return coordinates;
         }
